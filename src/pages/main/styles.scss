@@ -1,0 +1,32 @@
+.main {
+  .form {
+    padding: 10px;
+
+    input {
+      margin: 10px;
+    }
+  }
+
+  .result {
+    .atual {
+      display: flex;
+      flex-direction: column;
+
+      background-color: #3c165f;
+      border-radius: 15px;
+
+      padding: 10px;
+
+      img {
+        align-self: center;
+
+        width: 40px;
+        height: 25px;
+      }
+    }
+    h2 {
+      margin: 0;
+      font: lighter 60px "Poppins";
+    }
+  }
+}
