@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 
 import './styles.scss';
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import Loader from "react-loader-spinner";
+
+import Cloud from '../../assets/cloud.png';
+import { FaSearch } from 'react-icons/fa';
 
 import Prefix from '../../contexts/api';
 import api from '../../contexts/baseUrl';
@@ -13,21 +18,25 @@ export default function Main() {
   const [clima, setClima] = useState(0);
   const [min, setMin] = useState(0);
   const [max, setMax] = useState(0);
-  const [longitude, setLongitude] = useState(0);
-  const [latitude, setLatitude] = useState(0);
+  const [umidade, setUmidade] = useState(0);
 
   const [control, setControl] = useState(false);
 
   const [controlError, setControlError] = useState(false);
   const [erro, setErro] = useState('');
 
+  const [loading, setLoading] = useState(false);
+  const [searchCity, setSearchCity] = useState('');
+
   async function handleClima() {
     setControl(false);
     setControlError(false);
+    setLoading(true);
 
     if (!city) {
       setControlError(true);
       setErro("Preencha o campo corretamente.");
+      setLoading(false);
     } else {
       const req = await api.get('/weather?q=' + city + Prefix.API_KEY)
         .then(response => {
@@ -36,31 +45,33 @@ export default function Main() {
             atual: Number(Math.round(response.data.main.temp) - 273),
             min: Number(Math.round(response.data.main.temp_min) - 273),
             max: Number(Math.round(response.data.main.temp_max) - 273),
-            longitude: Number(response.data.coord.lon),
-            latitude: Number(response.data.coord.lat),
+            umidade: Number(response.data.main.humidity),
+            name: response.data.name,
           }
 
           setClima(element.atual);
           setMin(element.min);
           setMax(element.max);
-          setLongitude(element.longitude);
-          setLatitude(element.latitude);
+          setSearchCity(element.name);
+          setUmidade(element.umidade);
 
           setControl(true);
+          setLoading(false);
         })
         .catch(error => {
           setControlError(true);
           setErro("Cidade não encontrada - " + error);
+          setLoading(false);
         })
     }
   }
 
   return (
-    <div className="main">
+    <main>
       <h2>Pesquise pelo nome da cidade</h2>
       <div className="form">
         <input type="text" placeholder="digite a cidade..." value={city} onChange={city => setCity(city.target.value)} />
-        <button onClick={handleClima}>enviar</button>
+        <button onClick={handleClima}><FaSearch /></button>
       </div>
 
       {controlError &&
@@ -70,12 +81,32 @@ export default function Main() {
       {control &&
         <div className="result">
           <div className="atual">
-            {/* <img src={Cloud} alt="Nuvem" /> */}
-            <h2>{clima} °C</h2>
+            <img src={Cloud} alt="Nuvem" />
+            <h2>{searchCity}</h2>
+            <h3>{clima} °C</h3>
           </div>
-          <p>Mínima: {min}°C - Máxima: {max}°C</p>
+          <div className="minmax">
+            <p>Mínima: {min}°C - Máxima: {max}°C</p>
+          </div>
+          <div className="otherinforms">
+            <p>Umidade do ar: {umidade}%</p>
+          </div>
         </div>
       }
-    </div>
+
+      {loading &&
+        <Loader
+          type="TailSpin"
+          color="#8b5eb6"
+          height={50}
+          width={50}
+        />
+      }
+
+      <footer>
+        <p>Made by Jr.</p>
+      </footer>
+    </main>
+
   );
 }

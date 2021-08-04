@@ -1,9 +1,16 @@
-.main {
+main {
   .form {
+    display: flex;
     padding: 10px;
+    justify-content: center;
 
     input {
       margin: 10px;
+    }
+
+    button {
+      display: flex;
+      margin: auto 0;
     }
   }
 
@@ -21,12 +28,52 @@
         align-self: center;
 
         width: 40px;
-        height: 25px;
+        height: 30px;
       }
     }
+
+    .minmax {
+      display: flex;
+      flex-direction: column;
+
+      background-color: #3c165f;
+      border-radius: 15px;
+
+      margin: 10px 0;
+
+      p {
+        margin: 5px;
+      }
+    }
+
+    .otherinforms {
+      display: flex;
+      flex-direction: column;
+
+      background-color: #3c165f;
+      border-radius: 15px;
+
+      margin: 10px 0;
+
+      p {
+        margin: 5px;
+      }
+    }
+
     h2 {
+      text-transform: capitalize;
+      margin: 5px 0 0 0;
+    }
+
+    h3 {
       margin: 0;
       font: lighter 60px "Poppins";
+    }
+  }
+
+  footer {
+    p {
+      font-size: 11px;
     }
   }
 }
