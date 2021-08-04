@@ -74,14 +74,6 @@ export default function Main() {
             <h2>{clima} °C</h2>
           </div>
           <p>Mínima: {min}°C - Máxima: {max}°C</p>
-          <iframe
-            width="100%"
-            height="170"
-            frameBorder="0"
-            scrolling="no"
-            src={`https://maps.google.com/maps?q=${latitude},${longitude}&hl=es&z=14&amp`}
-          >
-          </iframe>
         </div>
       }
     </div>
