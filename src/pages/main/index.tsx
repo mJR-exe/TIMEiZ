@@ -42,7 +42,7 @@ export default function Main() {
       setErro("Preencha o campo corretamente.");
       setLoading(false);
     } else {
-      const req = await api.get(Prefix.API_KEY + '&q=' +city)
+      const req = await api.get(Prefix + '&q=' +city)
         .then(response => {
           
           //transform the temperature in Kelvin to Celsius and get lat and long
