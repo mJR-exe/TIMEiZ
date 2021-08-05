@@ -5,8 +5,7 @@ import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Loader from "react-loader-spinner";
 
 import Logo2 from '../../assets/logo-2.png';
-import Logo1 from '../../assets/logo.png';
-import { FaSearch, FaWind, FaWater, FaThermometerFull, FaCloud, FaInfo, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
+import { FaSearch, FaWind, FaWater, FaThermometerFull, FaCloud, FaInfo, FaInstagram, FaLinkedinIn, FaGithub } from 'react-icons/fa';
 
 import api from '../../contexts/baseUrl';
 
@@ -141,6 +140,7 @@ export default function Main() {
         <p>
           <a href="https://www.linkedin.com/in/mjrsf/" target="_blank" rel="noreferrer"><FaLinkedinIn /></a>
           <a href="https://www.instagram.com/junin.freire/" target="_blank" rel="noreferrer"><FaInstagram /></a>
+          <a href="https://github.com/mJR-exe" target="_blank" rel="noreferrer"><FaGithub /></a>
         </p>
       </footer>
     </main>

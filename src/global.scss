@@ -13,6 +13,7 @@ body {
   font-family: "Poppins", sans-serif;
 
   background-image: linear-gradient(90deg, #2c1963, #1c0f3f, #2a175e);
+  background-repeat: no-repeat;
 
   color: #fff;
 
@@ -45,5 +46,10 @@ body {
     font-family: "Poppins", sans-serif;
     color: #fff;
     cursor: pointer;
+  }
+
+  ::selection {
+    background: #4c1c79;
+    color: #fff;
   }
 }
