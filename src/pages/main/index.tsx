@@ -40,7 +40,7 @@ export default function Main() {
       setErro("Preencha o campo corretamente.");
       setLoading(false);
     } else {
-      await api.get('/weather?q=' + city + Prefix.API_KEY)
+      await api.get('/weather?q=' + city + Prefix)
         .then(response => {
           //transform the temperature in Kelvin to Celsius and get lat and long
           let element = {
