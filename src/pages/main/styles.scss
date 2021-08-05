@@ -1,7 +1,12 @@
 main {
   padding: 10px;
+
   img {
     width: 30%;
+  }
+
+  h2 {
+    margin: 5px;
   }
 
   .form {
@@ -48,7 +53,7 @@ main {
       }
     }
 
-    .minmax {
+    .informs {
       display: flex;
       flex-direction: column;
 
@@ -58,7 +63,8 @@ main {
       margin: 10px 0;
 
       p {
-        margin: 5px;
+        margin: 2px;
+        font-size: 13px;
       }
     }
 
@@ -79,11 +85,12 @@ main {
     h2 {
       text-transform: capitalize;
       margin: 0px;
+      font-weight: normal;
     }
 
     h3 {
       margin: 0;
-      font: lighter 60px "Poppins";
+      font: lighter 50px "Poppins";
     }
   }
 
