@@ -6,7 +6,7 @@ import Loader from "react-loader-spinner";
 
 import Logo2 from '../../assets/logo-2.png';
 import Logo1 from '../../assets/logo.png';
-import { FaSearch } from 'react-icons/fa';
+import { FaSearch, FaWind, FaWater, FaThermometerFull, FaCloud, FaInfo, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
 
 import api from '../../contexts/baseUrl';
 
@@ -23,6 +23,8 @@ export default function Main() {
   const [umidade, setUmidade] = useState(0);
   const [sensacao, setSensacao] = useState(0);
   const [condicao, setCondicao] = useState('');
+  const [precipitacao, setPrecipitacao] = useState(0);
+  const [ventos, setVentos] = useState(0);
 
   const [control, setControl] = useState(false);
 
@@ -43,7 +45,7 @@ export default function Main() {
     } else {
       const req = await api.get(Link + city)
         .then(response => {
-          
+
           //transform the temperature in Kelvin to Celsius and get lat and long
           let element = {
             atual: Number(response.data.current.temp_c),
@@ -53,6 +55,8 @@ export default function Main() {
             umidade: Number(response.data.current.humidity),
             sensacao: Number(response.data.current.feelslike_c),
             condicao: response.data.current.condition.text,
+            precipitacao: Number(Math.round(response.data.current.precip_mm) * 100),
+            ventos: Number(response.data.current.wind_kph),
           }
 
           setClima(element.atual);
@@ -62,6 +66,8 @@ export default function Main() {
           setUmidade(element.umidade);
           setSensacao(element.sensacao);
           setCondicao(element.condicao);
+          setPrecipitacao(element.precipitacao);
+          setVentos(element.ventos);
 
           setControl(true);
           setLoading(false);
@@ -80,9 +86,21 @@ export default function Main() {
   return (
     <main>
       <img src={Logo2} alt="Logo TIMEiZ." />
-      <h2>Digite o nome da sua cidade...</h2>
+      <h2>Consulte o clima da sua cidade</h2>
       <div className="form">
-        <input type="text" placeholder="digite a cidade..." value={city} onChange={city => setCity(city.target.value)} />
+        <input
+          type="text"
+          placeholder="(ex.: cidade, estado)..."
+          value={city}
+          onChange={city => setCity(city.target.value)}
+          onKeyPress={
+            event => {
+              if (event.key === 'Enter') {
+                handleClima();
+              }
+            }
+          }
+        />
         <button onClick={handleClima} aria-label="Buscar..."><FaSearch /></button>
       </div>
 
@@ -98,11 +116,13 @@ export default function Main() {
             <h3>{clima} °C</h3>
           </div>
           <div className="informs">
-            <p>{condicao}</p>
-            <p>Sensação térmica de {sensacao}° C</p>
-            <p>Umidade do ar: {umidade}%</p>
+            <p><FaCloud /> {condicao}</p>
+            <p><FaThermometerFull /> Sensação térmica de {sensacao}° C</p>
+            <p><FaInfo /> Umidade do ar: {umidade}%</p>
+            <p><FaWater /> Precipitação: {precipitacao}%</p>
+            <p><FaWind /> Ventos a {ventos}km/h</p>
           </div>
-           <div className="otherinforms">
+          <div className="otherinforms">
           </div>
         </div>
       }
@@ -117,8 +137,11 @@ export default function Main() {
       }
 
       <footer>
-      <img src={Logo1} alt="Logo TIMEiZ." />
-      <p><a href="https://www.linkedin.com/in/mjrsf/" target="_blank" rel="noreferrer">Made by Jr.</a></p>
+        <p>Made by Jr.</p>
+        <p>
+          <a href="https://www.linkedin.com/in/mjrsf/" target="_blank" rel="noreferrer"><FaLinkedinIn /></a>
+          <a href="https://www.instagram.com/junin.freire/" target="_blank" rel="noreferrer"><FaInstagram /></a>
+        </p>
       </footer>
     </main>
   );
