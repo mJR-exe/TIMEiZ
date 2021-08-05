@@ -5,6 +5,8 @@ import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Loader from "react-loader-spinner";
 
 import Cloud from '../../assets/cloud.png';
+import Logo2 from '../../assets/logo-2.png';
+import Logo1 from '../../assets/logo.png';
 import { FaSearch } from 'react-icons/fa';
 
 import Prefix from '../../contexts/api';
@@ -38,7 +40,7 @@ export default function Main() {
       setErro("Preencha o campo corretamente.");
       setLoading(false);
     } else {
-      const req = await api.get('/weather?q=' + city + Prefix.API_KEY)
+      await api.get('/weather?q=' + city + Prefix.API_KEY)
         .then(response => {
           //transform the temperature in Kelvin to Celsius and get lat and long
           let element = {
@@ -68,7 +70,8 @@ export default function Main() {
 
   return (
     <main>
-      <h2>Pesquise pelo nome da cidade</h2>
+      <img src={Logo2} alt="Logo TIMEiZ." />
+      <h2>Digite o nome da sua cidade...</h2>
       <div className="form">
         <input type="text" placeholder="digite a cidade..." value={city} onChange={city => setCity(city.target.value)} />
         <button onClick={handleClima}><FaSearch /></button>
@@ -104,9 +107,9 @@ export default function Main() {
       }
 
       <footer>
+      <img src={Logo1} alt="Logo TIMEiZ." />
         <p>Made by Jr.</p>
       </footer>
     </main>
-
   );
 }

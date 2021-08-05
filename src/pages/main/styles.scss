@@ -1,4 +1,9 @@
 main {
+  padding: 10px;
+  img {
+    width: 30%;
+  }
+
   .form {
     display: flex;
     padding: 10px;
@@ -6,11 +11,22 @@ main {
 
     input {
       margin: 10px;
+      transition: .5s;
+
+      &:focus-visible {
+        background-image: linear-gradient(90deg, #29165f, #351a5f);
+        box-shadow: 2px 2px 1px #4f2379;
+      }
     }
 
     button {
       display: flex;
       margin: auto 0;
+      transition: .5s;
+
+      &:hover {
+        box-shadow: 2px 2px 1px #4f2379;
+      }
     }
   }
 
@@ -72,6 +88,11 @@ main {
   }
 
   footer {
+    position: absolute;
+    bottom: 0;
+    img {
+      width: 10%;
+    }
     p {
       font-size: 11px;
     }
