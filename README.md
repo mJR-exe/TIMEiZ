@@ -4,5 +4,5 @@
    <p>Utilizando ReactJS, Sass, Axios e Firebase.</p>
    <a href="https://timeiz.web.app/" target="_blank" rel="external" color="#fff">TIMEiZ</a>
    <hr>
-   <a href="https://www.linkedin.com/in/maur%C3%ADcio-jr-f-963639141/" target="_blank"><img src="https://image.flaticon.com/icons/png/512/174/174857.png" width="20px"></a>
+   <a href="https://www.linkedin.com/in/mjrsf/" target="_blank"><img src="https://image.flaticon.com/icons/png/512/174/174857.png" width="20px"></a>
 </div>

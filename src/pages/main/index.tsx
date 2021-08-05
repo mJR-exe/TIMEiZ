@@ -67,8 +67,11 @@ export default function Main() {
         })
         .catch(error => {
           setControlError(true);
-          setErro("Cidade não encontrada - " + error);
+          setErro("Cidade não encontrada");
           setLoading(false);
+
+          console.log(error);
+          return error;
         })
     }
   }
@@ -113,7 +116,7 @@ export default function Main() {
 
       <footer>
       <img src={Logo1} alt="Logo TIMEiZ." />
-        <p>Made by Jr.</p>
+      <p><a href="https://www.linkedin.com/in/mjrsf/" target="_blank" rel="external">Made by Jr.</a></p>
       </footer>
     </main>
   );
