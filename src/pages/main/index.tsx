@@ -18,9 +18,11 @@ export default function Main() {
 
   const [city, setCity] = useState('');
   const [clima, setClima] = useState(0);
-  const [min, setMin] = useState(0);
-  const [max, setMax] = useState(0);
+  const [icon, setIcon] = useState('');
+  const [nameCity, setNameCity] = useState('');
+  const [stateCity, setStateCity] = useState('');
   const [umidade, setUmidade] = useState(0);
+  const [sensacao, setSensacao] = useState(0);
 
   const [control, setControl] = useState(false);
 
@@ -40,22 +42,25 @@ export default function Main() {
       setErro("Preencha o campo corretamente.");
       setLoading(false);
     } else {
-      await api.get('/weather?q=' + city + Prefix.API_KEY)
+      const req = await api.get(Prefix.API_KEY + '&q=' +city)
         .then(response => {
+          
           //transform the temperature in Kelvin to Celsius and get lat and long
           let element = {
-            atual: Number(Math.round(response.data.main.temp) - 273),
-            min: Number(Math.round(response.data.main.temp_min) - 273),
-            max: Number(Math.round(response.data.main.temp_max) - 273),
-            umidade: Number(response.data.main.humidity),
-            name: response.data.name,
+            atual: Number(response.data.current.temp_c),
+            icon: response.data.current.condition.icon,
+            name: response.data.location.name,
+            state: response.data.location.region,
+            umidade: Number(response.data.current.humidity),
+            sensacao: Number(response.data.current.feelslike_c),
           }
 
           setClima(element.atual);
-          setMin(element.min);
-          setMax(element.max);
-          setSearchCity(element.name);
+          setIcon(element.icon);
+          setNameCity(element.name);
+          setStateCity(element.state);
           setUmidade(element.umidade);
+          setSensacao(element.sensacao);
 
           setControl(true);
           setLoading(false);
@@ -84,14 +89,14 @@ export default function Main() {
       {control &&
         <div className="result">
           <div className="atual">
-            <img src={Cloud} alt="Nuvem" />
-            <h2>{searchCity}</h2>
+            <img src={icon} alt="Nuvem" />
+            <h2>{nameCity}, {stateCity}</h2>
             <h3>{clima} °C</h3>
           </div>
           <div className="minmax">
-            <p>Mínima: {min}°C - Máxima: {max}°C</p>
+            <p>Sensação térmica de {sensacao}° C</p>
           </div>
-          <div className="otherinforms">
+           <div className="otherinforms">
             <p>Umidade do ar: {umidade}%</p>
           </div>
         </div>
