@@ -1,7 +1,9 @@
 import axios from 'axios';
 
-const api = axios.create({
+export const api = axios.create({
     baseURL: 'https://api.weatherapi.com/v1'
 });
 
-export default api;
+export const local = axios.create({
+    baseURL: 'https://nominatim.openstreetmap.org'
+});

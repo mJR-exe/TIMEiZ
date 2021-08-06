@@ -5,9 +5,9 @@ import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Loader from "react-loader-spinner";
 
 import Logo2 from '../../assets/logo-2.png';
-import { FaSearch, FaWind, FaWater, FaThermometerFull, FaCloud, FaInfo, FaInstagram, FaLinkedinIn, FaGithub } from 'react-icons/fa';
+import { FaSearch, FaWind, FaWater, FaThermometerFull, FaCloud, FaInfo, FaInstagram, FaLinkedinIn, FaGithub, FaMapPin } from 'react-icons/fa';
 
-import api from '../../contexts/baseUrl';
+import { api, local } from '../../contexts/baseUrl';
 
 import Error from '../../components/error';
 import Link from '../../contexts/link';
@@ -26,11 +26,31 @@ export default function Main() {
   const [ventos, setVentos] = useState(0);
 
   const [control, setControl] = useState(false);
-
+  const [loading, setLoading] = useState(false);
   const [controlError, setControlError] = useState(false);
   const [erro, setErro] = useState('');
 
-  const [loading, setLoading] = useState(false);
+  function getPosition() {
+    setControlError(false);
+
+    navigator.geolocation.getCurrentPosition(async function (position) {
+      const req = await local.get('reverse.php?' + 'lat=' + position.coords.latitude + '&lon=' + position.coords.longitude + '&format=jsonv2')
+        .then(response => {
+          //normalize para remover acentos
+          let cidade = {
+            nome: response.data.address.town.normalize('NFD').replace(/[\u0300-\u036f]/g, ""),
+            estado: response.data.address.state.normalize('NFD').replace(/[\u0300-\u036f]/g, "")
+          }
+
+          setCity(cidade.nome + ", " + cidade.estado);
+        })
+        .catch(error => {
+          setControlError(true);
+          setErro(error);
+          return;
+        })
+    });
+  }
 
   async function handleClima() {
     setControl(false);
@@ -45,7 +65,6 @@ export default function Main() {
       const req = await api.get(Link + city)
         .then(response => {
 
-          //transform the temperature in Kelvin to Celsius and get lat and long
           let element = {
             atual: Number(response.data.current.temp_c),
             icon: response.data.current.condition.icon,
@@ -101,6 +120,7 @@ export default function Main() {
           }
         />
         <button onClick={handleClima} aria-label="Buscar..."><FaSearch /></button>
+        <button onClick={getPosition} aria-label="Localização Atual..."><FaMapPin /></button>
       </div>
 
       {controlError &&
